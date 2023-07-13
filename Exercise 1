@@ -1,0 +1,21 @@
+CREATE DATABASE School1;
+
+USE School1
+
+CREATE TABLE Students (
+    id INT NOT NULL AUTO_INCREMENT,
+    lname VARCHAR(25),
+    fname VARCHAR(35) NOT NULL,
+    address VARCHAR(45),
+    marks INT,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO Students (lname, fname, address, marks)
+VALUES ('brent', 'charles', '2 data road', 455);
+
+SELECT * FROM Students;
+
+DROP DATABASE School1;
+
+// This is to create a database, use database, create table, insert info into the table, select the table, drop the database //
