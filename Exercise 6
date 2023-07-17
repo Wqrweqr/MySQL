@@ -1,0 +1,96 @@
+CREATE DATABASE ORDERS1;
+
+USE ORDERS1;
+
+CREATE TABLE Customer (
+    Cust_ID INT NOT NULL AUTO_INCREMENT,
+    Custname VARCHAR(55),
+    Address VARCHAR(55),
+    Olimit DECIMAL(10,2),
+    PRIMARY KEY (Cust_ID)
+);
+
+INSERT INTO Customer (Custname, Address, Olimit) VALUES ('Henery', 'Address 1', 2300.34);
+INSERT INTO Customer (Custname, Address, Olimit) VALUES ('Janet', 'Address 2', 2000.00);
+INSERT INTO Customer (Custname, Address, Olimit) VALUES ('John', 'Address 3', 4500.50);
+INSERT INTO Customer (Custname, Address, Olimit) VALUES ('Jessie', 'Address 4', 5200.00);
+INSERT INTO Customer (Custname, Address, Olimit) VALUES ('Daisy', 'Address 5', 3500.00);
+
+CREATE TABLE Orders (
+    Ord_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Cust_id INT,
+    Oddate DATE,
+    Amount DECIMAL(10,3),
+    Ostatus VARCHAR(25),
+    FOREIGN KEY (Cust_id) REFERENCES Customer (Cust_ID)
+);
+
+INSERT INTO Orders (Cust_id, Oddate, Amount, Ostatus) VALUES (1, '2020-03-12', 100.50, 'Pending');
+INSERT INTO Orders (Cust_id, Oddate, Amount, Ostatus) VALUES (2, '2020-07-10', 1000.00, 'Shipped');
+INSERT INTO Orders (Cust_id, Oddate, Amount, Ostatus) VALUES (3, '2020-07-15', 500.50, 'Complete');
+INSERT INTO Orders (Cust_id, Oddate, Amount, Ostatus) VALUES (4, '2020-09-19', 2300.50, 'Processing');
+
+SELECT Customer.Cust_ID, Custname, Address, Oddate, Amount 
+FROM Customer
+LEFT JOIN Orders ON Customer.Cust_ID = Orders.Cust_id;
+
+SELECT Customer.Cust_ID, Custname, Address, Oddate, Amount
+FROM Customer
+RIGHT JOIN Orders ON Customer.Cust_ID = Orders.Cust_id;
+
+SELECT Customer.Cust_ID, Custname, Address, Oddate, Amount
+FROM Customer
+LEFT JOIN Orders ON Customer.Cust_ID = Orders.Cust_id
+UNION
+SELECT Customer.Cust_ID, Custname, Address, Oddate, Amount
+FROM Customer
+RIGHT JOIN Orders ON Customer.Cust_ID = Orders.Cust_id;
+
+SELECT * FROM Customer
+ORDER BY Custname;
+
+SELECT * FROM Customer
+Order by custname, olimit;
+
+SELECT * FROM Customer 
+Order by olimit, custname;
+
+SELECT * FROM Customer
+Order By custname desc;
+
+SELECT Orders.ord_id, Customer.cust_id, custname, SUM(Amount) 
+FROM Orders
+JOIN Customer ON Customer.Cust_ID = Orders.Cust_id 
+GROUP BY Orders.ord_id, Customer.cust_id, custname;
+
+SELECT Customer.cust_id, Customer.custname, Orders.amount
+FROM Customer
+JOIN Orders ON Customer.cust_id = Orders.cust_id;
+
+SELECT Ord_id, cust.cust_id, custname, SUM(amount)
+FROM customer AS cust
+JOIN orders AS o ON cust.cust_id = o.cust_id
+GROUP BY Ord_id, cust.cust_id, custname;
+
+SELECT Orders.ord_id, customer.cust_id, customer.custname, SUM(amount)
+FROM Orders
+JOIN customer ON customer.cust_id = Orders.cust_id
+GROUP BY Orders.ord_id, customer.cust_id, customer.custname
+ORDER BY customer.custname;
+
+DELIMITER $$TOTALCUSTORDER
+
+USE Orders1$$
+
+CREATE PROCEDURE TOTALCUSTORDER()
+BEGIN
+    SELECT ORD_ID, Customers.CUST_ID, Customers.CUSTNAME, SUM(AMOUNT)
+    FROM ORDERS
+    JOIN Customers ON Customers.CUST_ID = ORDERS.CUST_ID
+    GROUP BY Customers.CUST_ID, Customers.CUSTNAME
+    ORDER BY Customers.CUSTNAME;
+END$$
+
+DELIMITER ;
+
+// Learning to use delimiters //
