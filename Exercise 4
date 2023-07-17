@@ -1,0 +1,65 @@
+CREATE DATABASE Shop1;
+
+USE Shop1;
+
+CREATE TABLE Customers (
+    cust_ID INT NOT NULL AUTO_INCREMENT,
+    lname VARCHAR(35),
+    fname VARCHAR(35) NOT NULL,
+    address VARCHAR(50),
+    phone VARCHAR(20),
+    PRIMARY KEY (cust_ID)
+);
+
+INSERT INTO Customers (lname, fname, address, phone)
+VALUES ('barnes', 'jackie', '2 jupiter rd', '555-6565656');
+
+INSERT INTO Customers (lname, fname, address, phone)
+VALUES ('carter', 'john', '5 milky way', '555-7777777');
+
+INSERT INTO Customers (lname, fname, address, phone)
+VALUES ('pearce', 'sam', '15 uphill way', '555-8689894');
+
+CREATE TABLE Products (
+    prod_ID INT NOT NULL AUTO_INCREMENT,
+    product VARCHAR(35),
+    descript VARCHAR (50) NOT NULL,
+    unit INT,
+    price DECIMAL (19,2),
+    PRIMARY KEY (prod_ID)
+);
+
+INSERT INTO Products (product, descript, unit, price)
+VALUES ('apples', 'red and green apples', 1, 1.20);
+
+INSERT INTO Products (product, descript, unit, price)
+VALUES ('pears', 'green pears', 1, 1.25);
+
+INSERT INTO Products (product, descript, unit, price)
+VALUES ('oranges', 'large oranges', 1, 1.30);
+
+INSERT INTO Products (product, descript, unit, price)
+VALUES ('bananas', 'imported bananas', 4, 3.10);
+
+CREATE TABLE Orders (
+    order_ID INT NOT NULL AUTO_INCREMENT,
+    cust_id INT NOT NULL,
+    prod_id INT NOT NULL,
+    PRIMARY KEY (order_ID),
+    FOREIGN KEY (cust_id) REFERENCES Customers(cust_ID),
+    FOREIGN KEY (prod_id) REFERENCES Products(prod_ID)
+);
+
+INSERT INTO Orders (cust_id, prod_id) VALUES (1, 2);
+
+INSERT INTO Orders (cust_id, prod_id) VALUES (3, 2);
+
+INSERT INTO Orders (cust_id, prod_id) VALUES (3, 4);
+
+INSERT INTO Orders (cust_id, prod_id) VALUES (2, 1);
+
+INSERT INTO Orders (cust_id, prod_id) VALUES (2, 3);
+
+SELECT Orders.order_ID, Customers.lname, Customers.fname
+FROM Orders
+JOIN Customers ON Orders.cust_id = Customers.cust_ID;
