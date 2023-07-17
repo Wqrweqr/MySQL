@@ -1,0 +1,72 @@
+CREATE DATABASE HR;
+
+USE HR;
+
+CREATE TABLE Salaries (
+  sal_id INT NOT NULL AUTO_INCREMENT,
+  jobtitle VARCHAR(45),
+  joblevel VARCHAR(10),
+  salary INT NOT NULL,
+  PRIMARY KEY (sal_id)
+);
+
+CREATE TABLE departments (
+  dept_id INT NOT NULL AUTO_INCREMENT,
+  dept VARCHAR(40) NOT NULL,
+  PRIMARY KEY (dept_id)
+);
+
+CREATE TABLE employees (
+  emp_id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(55) NOT NULL,
+  age INT NOT NULL,
+  PRIMARY KEY (emp_id)
+);
+
+INSERT INTO departments (dept) values ('IT Department');
+
+INSERT INTO hr.departments (dept) values ('Accounting Department');
+
+INSERT INTO hr.departments (dept) values ('Helpdesk Department');
+
+INSERT INTO hr.departments (dept) values ('HR Department');
+
+INSERT INTO hr.departments (dept) values ('Snr Management');
+
+INSERT INTO hr.employees (name, age) values ('John Green', '35');
+
+INSERT INTO hr.employees (name, age) values ('Sandy Smith', '28');
+
+INSERT INTO hr.employees (name, age) values ('Terry Peach', '31');
+
+INSERT INTO hr.employees (name, age) values ('Jack Sunny', '47');
+
+INSERT INTO hr.employees (name, age) values ('Dru Red', '51');
+
+INSERT INTO hr.employees (name, age) values ('Jane Web', '30');
+
+INSERT INTO hr.salaries (jobtitle, joblevel, salary) values ('Administration', 'Entry 1', '25000');
+
+INSERT INTO hr.salaries (jobtitle, joblevel, salary) values ('Clerk 1', 'Entry 2', '28000');
+
+INSERT INTO hr.salaries (jobtitle, joblevel, salary) values ('Clerk 2', 'Mid 1', '31000');
+
+INSERT INTO hr.salaries (jobtitle, joblevel, salary) values ('Management', 'Mid 2', '35000');
+
+INSERT INTO hr.salaries (jobtitle, joblevel, salary) values ('Engineer 1', 'Entry 3', '26000');
+
+INSERT INTO hr.salaries (jobtitle, joblevel, salary) values ('Engineer 2', 'Mid 3', '32000');
+
+INSERT INTO hr.salaries (jobtitle, joblevel, salary) values ('Egnineer 3', 'Mid 4', '40000');
+
+INSERT INTO hr.salaries (jobtitle, joblevel, salary) values ('Sn Manager 1', 'Snr 1', '43000');
+
+INSERT INTO hr.salaries (jobtitle, joblevel, salary) values ('Director', 'Snr 2', '55000');
+
+SELECT * FROM hr.departments;
+
+SELECT * FROM hr.employees;
+
+SELECT * FROM hr.salaries;
+
+// Creates an HR Employee Database //
