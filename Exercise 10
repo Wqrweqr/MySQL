@@ -1,0 +1,66 @@
+CREATE DATABASE Sales;
+
+USE Sales;
+
+CREATE TABLE Prodsales (
+ID INT NOT NULL AUTO_INCREMENT,
+Product VARCHAR(45),
+Syear YEAR,
+Sales DECIMAL (10, 2),
+PRIMARY KEY(ID)
+);
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razor Blades', '2015', '23000');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razor Blades', '2015', '25000');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razors', '2015', '23800');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razors', '2015', '20800');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razor Blades', '2016', '30000');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razor Blades', '2016', '32000');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razors', '2016', '35000');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razors', '2016', '37000');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razor Blades', '2017', '43000');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razor Blades', '2017', '45000');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razors', '2017', '46000');
+
+INSERT INTO Prodsales (Product, Syear, Sales) VALUES ('Razors', '2017', '48000');
+
+SELECT * FROM Prodsales
+
+SELECT Product, SUM(Sales), Syear
+FROM Prodsales 
+GROUP BY Product, Syear;
+
+SELECT
+    Product,
+    SUM(CASE WHEN Syear = '2015' THEN Sales ELSE 0 END) AS '2015',
+    SUM(CASE WHEN Syear = '2016' THEN Sales ELSE 0 END) AS '2016',
+    SUM(CASE WHEN Syear = '2017' THEN Sales ELSE 0 END) AS '2017'
+FROM Prodsales
+GROUP BY Product;
+
+CREATE TABLE Prodsales_clone (
+    ID INT NOT NULL AUTO_INCREMENT,
+    Product VARCHAR(45),
+    Smonth VARCHAR(25),
+    Syear YEAR,
+    Sales DECIMAL(10, 2),
+    PRIMARY KEY (ID)
+);
+
+INSERT INTO Prodsales_clone (Product, Smonth, Syear, Sales)
+SELECT Product, NULL, Syear, Sales
+FROM Prodsales;
+
+SELECT * FROM sales.prodsales_clone;
+
+// Making cloning tables //
